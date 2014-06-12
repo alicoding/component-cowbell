@@ -25,26 +25,8 @@
 
 :host .hit #bell {
   -webkit-transform: scale(1.2);
-}
-
-:host #stick {
-  height: 8px;
-  width: 120px;
-  background: black;
-  position: absolute;
-  left: 40px;
-  top: 20px;
-  border-radius: 100px;
-  -webkit-transform-origin: left;
-}
-
-:host .hit #stick {
-  top: 25px;
-  -webkit-transform: rotate(15deg);
-}
-
-:host .hit #drum {
-  top: -15px;
+  -moz-transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 :host audio {

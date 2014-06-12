@@ -1,53 +1,28 @@
-<polymer-element name="ceci-cowbell" attributes="source speed label value drumcolor backgroundcolor stickcolor"
-  drumcolor="#FFFFFF"
-  stickcolor="#000000"
+<polymer-element name="ceci-cowbell" attributes="bellcolor backgroundcolor"
+  bellcolor="#FFFFFF"
   backgroundcolor="#81ac2d"
-  value="Click" extends="ceci-element"
-  speed="1.0">
+  extends="ceci-element">
   <ceci-definition>
     {
       "tags": ["button", "click", "tap"],
       "thumbnail": "./thumbnail.png",
       "description": "Broadcasts a \"click\" when clicked.",
       "name": "Cowbell",
-      "broadcasts": {
-        "click": {
-          "label": "Click",
-          "description": "Occurs when button is clicked."
-        }
-      },
+      "broadcasts": {},
       "listeners": {
         "kick": {
-          "description": "Causes a fake click event to occur.",
-          "label": "Kick",
+          "description": "Hits the cowbell!",
+          "label": "Hit",
           "default": true
-        },
-        "speed": {
-          "description": "Sets the playback rate for the audio clip.",
-          "label": "setSpeed"
         }
       },
       "attributes": {
-        "speed": {
-          "label": "Audio playback rate.",
-          "description": "1 for normal speed, 2 for twice speed, -1 for reverse, etc.",
-          "editable": "number"
-        },
-        "value": {
-          "label": "Value",
-          "description": "Value sent by the button.",
-          "editable": "text"
-        },
-        "stickcolor": {
-          "label": "Stick Color",
-          "editable": "color"
-        },
         "backgroundcolor": {
           "label": "Background Color",
           "editable": "color"
         },
-        "drumcolor": {
-          "label": "Drum Color",
+        "bellcolor": {
+          "label": "Cowbell Color",
           "description": "Color of the drum.",
           "editable": "color"
         }
@@ -58,7 +33,6 @@
     <link rel="stylesheet" href="component.css"></link>
     <div id="wrapper" class="off" on-mousedown="{{kickon}}" on-mouseup="{{kickoff}}">
       <div id="bell"></div>
-      <!-- <div id="stick"></div> -->
     </div>
     <audio id="kicksound" src="sounds/sound.mp3" preload=preload></audio>
     <shadow></shadow>
@@ -90,31 +64,11 @@
         this.$.snare.currentTime = 0;
         this.$.snare.play();
       },
-      sourceChanged: function(oldValue, newValue) {
-        this.$.clip.src = newValue;
-      },
-      setSpeed: function(channel, value) {
-        this.speedChanged(this.$.snare.playbackRate || 1, value);
-        this.speedChanged(this.$.kick.playbackRate || 1, value);
-      },
-      speedChanged: function(oldValue, newValue) {
-        try  {
-          var f = parseFloat(newValue);
-          if (f) {
-            this.$.kick.playbackRate = parseFloat(newValue);
-            this.$.snare.playbackRate = parseFloat(newValue);
-          }
-        } catch (e) {}
-      },
-      stickcolorChanged: function (oldValue, newValue) {
-        // this.$.stick.style.background = newValue;
-      },
-      drumcolorChanged: function (oldValue, newValue) {
-        // this.$.drum.style.background = newValue;
-      },
       backgroundcolorChanged: function (oldValue, newValue) {
-        console.log("background change to " + newValue);
         this.$.wrapper.style.background = newValue;
+      },
+      bellcolorChanged: function (oldValue, newValue) {
+        this.$.bell.style.borderBottom = "solid 100px " + newValue;
       }
     });
   </script>
